@@ -1,0 +1,22 @@
+# Patterns for MAANG questions
+
+- Two Pomiter
+- Sliding Windows 
+- Binary Searching
+- Islands (Matrix Traversal)
+- Fast and Slow Pointers
+- Merge Intervals
+- Cyclic Sort
+- In-Place Reversal of Linkedlist
+- Breadth-First Search 
+- Depth-First Search 
+- Two Heaps (Min and Max Heap)
+- Subsets
+- Bitwise XOR
+- Top 'K' Elements
+- K-way merge 
+- Topological Sort
+- 0/1 Knapsack
+- Fibonacci Numbers
+- Palindromic Subsequence
+- Longest Common Substring
