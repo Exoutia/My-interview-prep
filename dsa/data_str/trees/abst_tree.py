@@ -22,7 +22,7 @@
 # • If p is the root, then the depth of p is 0.
 # • Otherwise, the depth of p is one plus the depth of the parent of p.
 
-class AbstrarctTree:
+class Tree:
     """Abstract base class representing a tree struvture."""
 
     class Position:
@@ -103,4 +103,3 @@ class AbstrarctTree:
             p = self.root()
         return self._heihgt2(p)
 
-    
