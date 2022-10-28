@@ -18,6 +18,9 @@
 # T.is empty( ): Return True if tree T does not contain any positions.
 # T.positions( ): Generate an iteration of all positions of tree T.
 # iter(T): Generate an iteration of all elements stored within tree T.
+# T.depth(p): let p be the positon of a node of tree T. then the depth of p would be number of ancestors of p, exluding p itself,
+# • If p is the root, then the depth of p is 0.
+# • Otherwise, the depth of p is one plus the depth of the parent of p.
 
 class AbstrarctTree:
     """Abstract base class representing a tree struvture."""
@@ -36,7 +39,7 @@ class AbstrarctTree:
         def __ne__(self, __o: object) -> bool:
             """Return True if other Position represents the different location."""
             return not(self==__o)
-            
+
     def root(self):
         """Return Position representing the tree's (or None if empty)."""
         raise NotImplementedError('must be implemented by subclass')
@@ -68,3 +71,36 @@ class AbstrarctTree:
     def is_empty(self):
         """Return True if the tree is empty."""
         return len(self)==0
+
+    def depth(self, p):
+        """Return the number of levels separating Position p from the root."""
+        if self.is_root(p):
+            return 0
+        else:
+            return 1 + self.depth(self.parent(p))
+
+    def _height(self):
+        """Return the height of the tree
+        O(n^2) time complexity"""
+        return max(self.depth(p) for p in self.positions() if self.is_leaf(p))
+
+    def _heihgt2(self, p):
+        """Return the height of the subtree rooted at Position p.
+        linear time complexity"""
+        if self.is_leaf(p):
+            return 0
+        else:
+            return 1 + max(self._heihgt2(c) for c in self.children(p))
+
+    def height(self, p=None):
+        """Return the height of the subtree rooted at position p
+
+        Args:
+            p (Node, optional): subtree node. Defaults to None.
+        if p is none return the height of the entire tree.
+        """
+        if p is None:
+            p = self.root()
+        return self._heihgt2(p)
+
+    
