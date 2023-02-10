@@ -3,7 +3,7 @@ from abst_tree import Tree
 class BinaryTree(Tree):
     """Abstract base class representing a binary tree structure."""
 
-    # -------------------- additional abstract methods -----------------
+    # -------------------- additional abstract methods ----------------- #
     def left(self, p):
         """Return a Position representing p's left child.
 
@@ -34,6 +34,6 @@ class BinaryTree(Tree):
             yield self.left(p)
         if self.right(p) is not None:
             yield self.right(p)
-    
+
 
 

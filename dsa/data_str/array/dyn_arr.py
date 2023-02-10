@@ -38,3 +38,12 @@ class DynamicArray:
         """Return new array with capacity c."""
         return (c*ctypes.py_object)()
 
+
+
+
+
+if __name__ == "__main__":
+    x = DynamicArray()
+    for i in range(1, 10):
+        x.append(i)
+    print([i for i in x])
