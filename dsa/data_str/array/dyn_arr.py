@@ -5,8 +5,8 @@ class DynamicArray:
 
     def __init__(self) -> None:
         """Create an empty array."""
-        self._n = 0
-        self._capacity = 1
+        self._n = 0              # this is the number of elements in the list
+        self._capacity = 1       # this is the capacity of arr
         self._A = self._make_array(self._capacity)
 
     def __len__(self):

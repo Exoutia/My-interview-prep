@@ -1,12 +1,12 @@
-# To provide for a general abstraction of  sequence of elements with the ability to identify 
+# To provide for a general abstraction of  sequence of elements with the ability to identify
 # the location of element, we define a positional list ADT as well as a simpler position abstract data
 # type to describe a location within a list. A position acts as a marker or token within the broader positional list.
-# A position p is unaffected by the changes elsewhere in the list; The only way in which a position 
+# A position p is unaffected by the changes elsewhere in the list; The only way in which a position
 # become invalid if an explicit command is given to delete it.
 # A position instance is a simple object which supports only:
 # p.element(): Return the stored at position p.
 
-# In the context of the positional list adt, position serve as parameters to some methods and as return values from other methods. 
+# In the context of the positional list adt, position serve as parameters to some methods and as return values from other methods.
 
 from dll import _DoublyLinkedBase
 
@@ -15,31 +15,31 @@ class PositionalList(_DoublyLinkedBase):
     """A sequential container of elements allowing positional access.
 
     Args:
-        _DoublyLinkedBase (double linked list): This the class we from which we are importing 
+        _DoublyLinkedBase (double linked list): This the class we from which we are importing
         doublylinked list used for the underlying of our positional list.
     """
     # --------------------------------nested Positon class------------------------------- #
     class Position:
         """An abstraction representing the location of a single element.
         """
-        
+
         def __init__(self, container, node):
             """This constructor should not be invoked by the user.
 
             Args:
-                conatainer (doublylinked list): This is the double linked list 
+                conatainer (doublylinked list): This is the double linked list
                 where we are pointing positons with this position. This determines position which it points
                 relation to some container.
                 node (node): linked list single node
             """
             self._container = container
             self._node = node
-        
+
         def element(self):
             """Return the element stored at this position.
             """
             return self._node._element
-        
+
         def __eq__(self, other):
             """Return true if other is a position representing the same location.
 
@@ -47,7 +47,7 @@ class PositionalList(_DoublyLinkedBase):
                 other (position): some location of node.
             """
             return type(other) is type(self) and other._node is self._node
-        
+
         def __ne__(self, other):
             """Return true if other is not the same position or not the same node
 
@@ -56,7 +56,7 @@ class PositionalList(_DoublyLinkedBase):
             """
             return not (self == other)
     # --------------------------------Utility method------------------------------- #
-    
+
     def _validate(self, p):
         """Return positon's node, or raise appropriate error if invalid.
 
@@ -65,10 +65,10 @@ class PositionalList(_DoublyLinkedBase):
         """
         if not isinstance(p, self.Position):
             raise TypeError(f'{p} must be proper Position type')
-        
+
         if p._container is not self:
             raise ValueError(f'{p} does not belong to this container.')
-        
+
         if p._node._next is None:
             raise ValueError(f'{p} is no longer valid.')
         return p._node
@@ -83,18 +83,18 @@ class PositionalList(_DoublyLinkedBase):
             return None
         else:
             return self.Position(self, node)
-    
+
     # -------------------------------- accessors ------------------------------- #
     def first(self):
-        """Return the first position in the list (or None if list is empty).        
+        """Return the first position in the list (or None if list is empty).
         """
         return self._make_position(self._header._next)
-    
+
     def last(self):
         """Return the last poition of the list or none if the list is empty.
         """
         return self._make_position(self._trailer._prev)
-    
+
     def before(self, p):
         """Return the previous element before the position provided
 
@@ -103,7 +103,7 @@ class PositionalList(_DoublyLinkedBase):
         """
         node = self._validate(p)
         return self._make_position(node._prev)
-    
+
     def after(self, p):
         """Return the position just before the position p.
 
@@ -112,7 +112,7 @@ class PositionalList(_DoublyLinkedBase):
         """
         node = self._validate(p)
         return self._make_position(node._next)
-    
+
     def __iter__(self):
         """Generate a forward iteration of the elements of the list.
         """
@@ -120,10 +120,10 @@ class PositionalList(_DoublyLinkedBase):
         while cursor is not None:
             yield cursor.element()
             cursor = self.after(cursor)
-    
+
     # -------------------------------- Mutators ------------------------------- #
     # Override inherited version to return Position, rather than Node
-    
+
     def _insert_between(self, e, predecssor, successor):
         """Add element between existing nodes and return new Position.
 
@@ -134,7 +134,7 @@ class PositionalList(_DoublyLinkedBase):
         """
         node = super()._insert_between(e, predecssor, successor)
         return self._make_position(node)
-    
+
     def add_first(self, e):
         """Add element at front of the list and return new position.
 
@@ -142,11 +142,11 @@ class PositionalList(_DoublyLinkedBase):
             e (element): element we want to insert
         """
         return self._insert_between(e, self._header, self._header._next)
-    
+
     def add_last(self, e):
         """Add element at the last of list and return new position."""
         return self._insert_between(e, self._trailer._prev, self._trailer)
-    
+
     def add_before(self, p, e):
         """Add element before the position provided
 
@@ -156,31 +156,31 @@ class PositionalList(_DoublyLinkedBase):
         """
         original = self._validate(p)
         return self._insert_between(e, original._prev, original)
-    
+
     def add_after(self, p, e):
         """Insert element e into list after the position."""
         original = self._validate(p)
         return self._insert_between(e, original, original._next)
-    
-    def delete_position(self, p):
+
+    def delete(self, p):
         """Remove and return the element at Position p.
         """
         original = self._validate(p)
         return self._delete_node(original)
-    
+
     def replace(self, p, e):
         """Replace the element at Position p with e
 
         Args:
             p (Position)
-            e (element) 
+            e (element)
         """
         original = self._validate(p)
         old_val = original._element
         original._element = e
         return old_val
-    
- 
+
+
 def insertion_sort(pos_list: PositionalList()):
     if len(pos_list) > 1:
         marker = pos_list.first()
@@ -196,19 +196,21 @@ def insertion_sort(pos_list: PositionalList()):
                     walk = pos_list.before(walk)
                 pos_list.delete_position(pivot)
                 pos_list.add_before(walk, value)
-                
 
 
 class FavouritesList:
     """List of elements ordered from most frequently accessed to least.
     """
-    
-    class _item:
+    # ---------------------------------- nested _Item class ------------------------------
+    class _Item:
         __slots__ = '_value', '_count'
+
         def __init__(self, e):
             self._value = e
             self._count = 0
-    
+
+    # ------------------------------------ nonpublic utilities ----------------------------
+
     def _find_positions(self, e):
         """Search for element e and return its Position (or none if not find).
 
@@ -218,19 +220,61 @@ class FavouritesList:
         walk = self._data.first()
         while walk is not None and walk.element()._value != e:
             walk = self._data.after(walk)
-        return walk 
-    
+        return walk
+
     def _move_up(self, p):
         """Move item at position p earlier in the list based on access count.
 
         Args:
-            p (Position): the position of element we want to add 
+            p (Position): the position of element we want to add
         """
         if p != self._data.first():
             cnt = p.element()._count
             walk = self._data.before(p)
             if cnt > walk.element()._count:
-                while 
+                while (walk != self._data.first() and
+                        cnt > self._data.before(walk).element()._count):
+                    walk = self._data.before(walk)
+                self._data.add_before(walk, self._data.delete(p))
+
+    # --------------------------- public methods ----------------------------------
+
+    def __init__(self):
+        """Create an empty list of favourites."""
+        self._data = PositionalList()  # will be list of _Item instance
+
+    def __len__(self):
+        """Return number of entries on favorites list."""
+        return len(self._data)
+
+    def is_empty(self):
+        """Return True if list is empty."""
+        return len(self._data) == 0
+
+    def access(self, e):
+        """Access element e, thereby increasing its access count."""
+        p = self._find_positions(
+            e)             # try to locate existing element
+        if p is None:
+            p = self._data.add_last(self._Item)  # if new, place at end
+        p.element()._count += 1                 # always increment count
+        self._move_up(p)                        # consider moving forward
+
+    def remove(self, e):
+        """Remove element e from the list of favorites."""
+        p = self._find_positions(e)    # try to locate existing elemet
+        if p is not None:
+            self._data.delete(p)
+
+    def top(self, k):
+        """Generate sequence of top k elemetns in terms of access count."""
+        if not 1 <= k <= len(self):
+            raise ValueError('Illegal value for k')
+        walk = self._data.first()
+        for j in range(k):
+            item = walk.element()  # element of list is _Item
+            yield item._value      # report user's element
+            walk = self._data.after(walk)
 
 
 if __name__ == "__main__":
@@ -247,10 +291,3 @@ if __name__ == "__main__":
     while x:
         print(x.element(), end="<->")
         x = text.after(x)
-    
-    
-    
-    
-    
-    
-    
