@@ -20,8 +20,8 @@ class BinaryTree(Tree):
     def sibling(self, p):
         """Return a Position representing p's sibling (or None if no sibling). """
         parent = self.parent()
-        if parent is None:
-            return None
+        if parent is None:     # p must be the root
+            return None         # root has no subling
         else:
             if p == self.left(parent):
                 return self.right(parent)

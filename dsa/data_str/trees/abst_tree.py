@@ -22,6 +22,7 @@
 # • If p is the root, then the depth of p is 0.
 # • Otherwise, the depth of p is one plus the depth of the parent of p.
 
+
 class Tree:
     """Abstract base class representing a tree struvture."""
 
@@ -30,35 +31,35 @@ class Tree:
 
         def element(self):
             """Return the element stored at this Position."""
-            raise NotImplementedError('must be implemented by subclass')
+            raise NotImplementedError("must be implemented by subclass")
 
         def __eq__(self, __o: object) -> bool:
             """Return True if other Position represents the same location."""
-            raise NotImplementedError('must be implemented by subclass')
+            raise NotImplementedError("must be implemented by subclass")
 
         def __ne__(self, __o: object) -> bool:
             """Return True if other Position represents the different location."""
-            return not(self==__o)
+            return not (self == __o)
 
     def root(self):
         """Return Position representing the tree's (or None if empty)."""
-        raise NotImplementedError('must be implemented by subclass')
+        raise NotImplementedError("must be implemented by subclass")
 
     def parent(self, p):
         """Retrun Position representing the p's parent (or none if is parent)"""
-        raise NotImplementedError('must be implemented by subclass')
+        raise NotImplementedError("must be implemented by subclass")
 
     def num_children(self, p):
         """Return the number of children that Position p has."""
-        raise NotImplementedError('must be implemented by subclass')
+        raise NotImplementedError("must be implemented by subclass")
 
     def children(self, p):
         """Genereate an iteration of poition represnting p's children"""
-        raise NotImplementedError('must be implemented by subclass')
+        raise NotImplementedError("must be implemented by subclass")
 
     def __len__(self):
         """Return the total number of elements in the tree."""
-        raise NotImplementedError('must be implemented by subclass')
+        raise NotImplementedError("must be implemented by subclass")
 
     def is_root(self, p):
         """Return True if Position p represents the root of the tree."""
@@ -70,7 +71,7 @@ class Tree:
 
     def is_empty(self):
         """Return True if the tree is empty."""
-        return len(self)==0
+        return len(self) == 0
 
     def depth(self, p):
         """Return the number of levels separating Position p from the root."""
@@ -101,5 +102,4 @@ class Tree:
         """
         if p is None:
             p = self.root()
-        return self._heihgt2(p)
-
+        return self._heihgt2(p)  # start _height2 recursion
